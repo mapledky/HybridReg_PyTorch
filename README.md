@@ -11,4 +11,4 @@ Scene-level point cloud registration is very challenging when considering dynami
 This paper presents HybridReg, a new approach to 3D point cloud registration, learning uncertainty mask to account for hybrid motions: rigid for backgrounds and non-rigid/rigid for
 instance-level foregrounds. First, we build a scene-level 3D registration dataset, namely HybridMatch, designed specifically with strategies to arrange diverse deforming foregrounds in a controllable manner. Second, we account for different motion types and formulate a mask-learning module to alleviate the interference of deforming outliers. Third, we exploit a simple yet effective negative log-likelihood loss to adopt uncertainty to guide the feature extraction and correlation computation. To our best knowledge, HybridReg is the first work that exploits hybrid motions for robust point cloud registration. Extensive experiments show HybridReg’s strengths, leading it to achieve state-of-the-art performance on both widely-used indoor and outdoor datasets.
 
-![image text](./assets/pipeline.png)
+![image text](./pipeline.png)
