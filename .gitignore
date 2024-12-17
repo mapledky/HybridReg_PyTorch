@@ -1,0 +1,10 @@
+.idea
+.vscode
+build
+output
+*.egg-info
+*.so
+data
+**/__pycache__
+assets/weights/*
+pretrained
