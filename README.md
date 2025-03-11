@@ -4,7 +4,7 @@
 <h4 align = "center"> <sup>1</sup>University of Electronic Science and Technology of China (UESTC)</center></h4>
 <h4 align = "center"> <sup>2</sup>The Chinese University of Hong Kong (CUHK)</center></h4>
 
-This is the official implementation of our AAAI2025 paper, HybridReg: Robust 3D Point Cloud Registration with Hybrid Motions.
+This is the official implementation of our AAAI2025 paper, [HybridReg: Robust 3D Point Cloud Registration with Hybrid Motions](https://arxiv.org/abs/2503.07019) .
 
 ## Introduction
 Scene-level point cloud registration is very challenging when considering dynamic foregrounds. Existing indoor datasets mostly assume rigid motions, so the trained models can not robustly handle scenes with non-rigid motions. On the other hand, non-rigid datasets are mainly object-level, so the trained models cannot generalize well to complex scenes.  
@@ -37,7 +37,15 @@ We provide pre-trained weights on HybridMatch in the [weights](https://github.co
 ## Data Preparation
 Our scene-level 3D registration dataset HybridMatch can be downloaded from [HybridMatch](https://huggingface.co/datasets/kinseyxyz/HybridMatch). Put the dataset in `data` directory.
 
-## HybridMatch
+## HybridReg
+
+### Training
+
+The code for HybridMatch is in `experiments/hybridmatch`. Use the following command for training.
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python trainval.py
+```
 
 ### Testing
 
@@ -49,6 +57,15 @@ python test.py --data_dir=test/sp/high
 
 Replace `test/sp/high` with `test/sp/low`, `test/bp/high` and `test/bp/low` to evaluate on different split of HybridMatch and HybridLoMatch.
 
+## Multi-GPU Training
+
+We limit the batch size to 1 per GPU at this time and support batch training via `DistributedDataParallel`. Use `torch.distributed.launch` for multi-gpu training:
+
+```bash
+CUDA_VISIBLE_DEVICES=GPUS python -m torch.distributed.launch --nproc_per_node=NGPUS trainval.py
+```
+
+Note that the learning rate is multiplied by the number of GPUs by default as the batch size increased.
 
 
 ## Citation
