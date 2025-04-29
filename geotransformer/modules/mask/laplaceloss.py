@@ -119,5 +119,5 @@ class LaplaceLoss(nn.Module):
         else:
             corr_sp_mask = output_dict['corr_sp_mask']
         loss = self.loss(corr_gt, corr_es, (1 - corr_sp_mask))
-        return loss, 1-gt_mask
+        return loss
 
