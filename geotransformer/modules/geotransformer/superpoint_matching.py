@@ -53,7 +53,7 @@ class SuperPointMatching(nn.Module):
             laplace_mask_src = laplace_mask_src.unsqueeze(0).expand_as(matching_scores)
             laplace_mask_ref = laplace_mask_ref.unsqueeze(1).expand_as(matching_scores)
             # Combine masks
-            combined_mask = (laplace_mask_ref == 1) & (laplace_mask_src == 1)
+            combined_mask = (laplace_mask_ref > 0.999) & (laplace_mask_src  > 0.999)
             probability_mask = torch.rand_like(matching_scores) < 0.5
             combined_mask = combined_mask & probability_mask
             # Apply the mask to the matching scores
@@ -62,7 +62,7 @@ class SuperPointMatching(nn.Module):
         else:
             filtered_scores = matching_scores
         
-        corr_scores, corr_indices = matching_scores.view(-1).topk(k=num_correspondences, largest=True)
+        corr_scores, corr_indices = filtered_scores.view(-1).topk(k=num_correspondences, largest=True)
         ref_sel_indices = corr_indices // matching_scores.shape[1]
         src_sel_indices = corr_indices % matching_scores.shape[1]
         # recover original indices
